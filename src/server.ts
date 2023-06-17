@@ -4,6 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import { routes } from './routes/routes';
+import { errorHandler } from './app/middlewares/errorHandler';
 
 mongoose.connect('mongodb://localhost:27017')
     .then(() => {
@@ -12,6 +13,7 @@ mongoose.connect('mongodb://localhost:27017')
 
         app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
         app.use(express.json());
+        app.use(errorHandler);
         app.use(routes);
 
         app.listen(port, () => {
