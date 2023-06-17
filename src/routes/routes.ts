@@ -8,6 +8,6 @@ const routes = Router();
 
 routes.use('/categories', categoryRoutes);
 routes.use('/products', productRoutes);
-routes.use('/ordes', orderRoutes);
+routes.use('/orders', orderRoutes);
 
 export { routes };
