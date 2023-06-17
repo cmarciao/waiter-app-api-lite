@@ -20,7 +20,6 @@ const upload = multer({
 const productRoutes = Router();
 
 productRoutes.get('/', listProducts);
-productRoutes.get('/:id/products');
 productRoutes.post('/', upload.single('image'), createProduct);
 
 export { productRoutes };
