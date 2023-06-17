@@ -9,5 +9,7 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
         });
     }
 
+    console.log(err.message);
+
     return res.sendStatus(500);
 }
