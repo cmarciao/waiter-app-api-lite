@@ -1,5 +1,6 @@
 import path from 'node:path';
 
+import 'express-async-errors';
 import express from 'express';
 import mongoose from 'mongoose';
 
@@ -13,8 +14,9 @@ mongoose.connect('mongodb://localhost:27017')
 
         app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
         app.use(express.json());
-        app.use(errorHandler);
+
         app.use(routes);
+        app.use(errorHandler);
 
         app.listen(port, () => {
             console.log(`🚀 Server is running on http://localhost:${port}`);
