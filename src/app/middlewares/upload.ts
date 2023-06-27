@@ -10,7 +10,7 @@ export const upload = multer({
                 throw new AppError('Image is required!');
             }
 
-            callback(null, path.resolve(__dirname, '..', '..', 'uploads'));
+            callback(null, path.resolve(__dirname, '..', '..', '..', 'uploads'));
         },
         filename(req, file, callback) {
             callback(null, `${Date.now()}-${file.originalname}`);

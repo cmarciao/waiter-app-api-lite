@@ -8,6 +8,6 @@ import { createProduct } from '../app/useCases/products/createProduct';
 const productRoutes = Router();
 
 productRoutes.get('/', listProducts);
-productRoutes.post('/', validateCreateProduct, upload.single('image'), createProduct);
+productRoutes.post('/', upload.single('image'), validateCreateProduct, createProduct);
 
 export { productRoutes };

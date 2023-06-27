@@ -4,6 +4,7 @@ import { Order } from '../../models/Order';
 import { Product } from '../../models/Product';
 
 import { AppError } from '../../error/AppError';
+import { io } from '../../../server';
 
 export async function createOrder(req: Request, res: Response) {
     const { table, products } = req.body;
@@ -21,6 +22,8 @@ export async function createOrder(req: Request, res: Response) {
     }
 
     const order = await Order.create({ table, products });
+    const orderDetails = await order.populate('products.product');
 
+    io.emit('orders@new', orderDetails);
     res.status(201).json(order);
 }
