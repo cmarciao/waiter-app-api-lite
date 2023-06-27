@@ -1,5 +1,7 @@
 import path from 'node:path';
+import http from 'node:http';
 
+import { Server } from 'socket.io';
 import 'express-async-errors';
 import express from 'express';
 import mongoose from 'mongoose';
@@ -7,10 +9,21 @@ import mongoose from 'mongoose';
 import { routes } from './routes/routes';
 import { errorHandler } from './app/middlewares/errorHandler';
 
+const app = express();
+const server = http.createServer(app);
+export const io = new Server(server);
+
 mongoose.connect('mongodb://localhost:27017')
     .then(() => {
-        const app = express();
         const port = 3001;
+
+        app.use((req, res, next) => {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', '*');
+            res.setHeader('Access-Control-Allow-Headers', '*');
+
+            next();
+        });
 
         app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
         app.use(express.json());
@@ -18,7 +31,7 @@ mongoose.connect('mongodb://localhost:27017')
         app.use(routes);
         app.use(errorHandler);
 
-        app.listen(port, () => {
+        server.listen(port, () => {
             console.log(`🚀 Server is running on http://localhost:${port}`);
         });
     })
